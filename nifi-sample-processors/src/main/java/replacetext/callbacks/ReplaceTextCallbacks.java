@@ -30,17 +30,12 @@ public class ReplaceTextCallbacks implements StreamCallback {
              final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                Pattern pattern = Pattern.compile(String.valueOf(wordToReplace));
-                Matcher matcher = pattern.matcher(line);
 
-                while (matcher.find()) {
-                    String nextWord = matcher.group(1);
-                    line = matcher.replaceFirst("");
-                    System.out.println("Deleted word: " + nextWord);
-                    matcher = pattern.matcher(line);
-                }
+                Pattern pattern = Pattern.compile(wordToReplace);            // Compile the pattern
 
-                writer.write(line);
+                Matcher matcher = pattern.matcher(line);             // Replace the password with the string ""
+
+                writer.write(matcher.replaceAll(replacementWord) + "\n");
                 writer.newLine();
             }
             _isSuccess = true;
